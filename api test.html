@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>api test</title>
+</head>
+
+<body>
+
+    <h1>Bitcoini hind: </h1>
+    <div id="sisu"></div>
+
+    <script>
+        fetch('https://api.coindesk.com/v1/bpi/currentprice/EUR.json')
+        .then(response => response.json())
+        .then (data =>{
+            document.getElementById("sisu").innerHTML = data.bpi.EUR.rate + "€";
+        })
+    </script>
+
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eesti Temperatuur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .temperature {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Eesti Temperatuuri Näitamine</h1>
+    <p id="status">Laenandmed...</p>
+    <div class="temperature" id="temperature"></div>
+
+    <script>
+        // Geograafilised koordinaadid Kuressaare kohta
+        const latitude = 58.26416666666667;
+        const longitude = 22.48944444411111;
+
+        // API URL (Eesti Ilmateenistuse XML API)
+        const apiUrl = `https://www.ilmateenistus.ee/ilma_andmed/xml/observations.php?latitude=${latitude}&longitude=${longitude}`;
+
+        // Funktsioon API päringu tegemiseks ja temperatuuri kuvamiseks
+        function getTemperature() {
+            // Näitame, et andmeid laetakse
+            document.getElementById('status').innerText = "Laenandmed...";
+
+            // Kasutame Fetch API-d, et teha päring Ilmateenistuse XML API-le
+            fetch(apiUrl)
+                .then(response => response.text()) // Saame vastuseks tekst (XML formaadis)
+                .then(data => {
+                    // Konverteerime XML-i JavaScripti objektiks
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data, "application/xml");
+
+                    // Otsime temperatuuri XML-ist
+                    const airTemperature = xmlDoc.getElementsByTagName('airtemperature')[0]?.textContent;
+
+                    // Kuvame temperatuuri
+                    if (airTemperature) {
+                        document.getElementById('temperature').innerText = `${airTemperature}°C`;
+                        document.getElementById('status').innerText = "Temperatuur on saadud!";
+                    } else {
+                        document.getElementById('temperature').innerText = "Temperatuuri ei leitud.";
+                        document.getElementById('status').innerText = "Viga andmete laadimisel.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Viga API päringus:', error);
+                    document.getElementById('status').innerText = "Andmete laadimine ebaõnnestus.";
+                });
+        }
+
+        // Kutsume funktsiooni, et temperatuuri kuvada, kui leht on valmis
+        window.onload = getTemperature;
+    </script>
+
+</body>
+</html>
+
+</body>
+
+</html>
