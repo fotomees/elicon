@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+html{
+    scroll-behavior: smooth;
+}
+
+
+
+body{    
+    font-family: "Playfair Display", serif;
+    line-height: 1.8;
+    background-color:rgb(184, 208, 129)
+}
+
+#sisu{
+    max-width: 50em;
+    margin: 0 auto;
+    padding-top: 3em;
+}
+#menu{
+    text-align: center;
+    background-color: rgb(52, 42, 42);
+    margin: -8px;
+    margin-top: -8px;
+    height: 3em;
+    padding-top: 1em;
+    position: fixed;
+    width: 100%;
+}
+#menu a{
+    color: rgb(224, 224, 224);
+    text-transform: uppercase;
+    padding: 0 1em;
+}
+#menu a:hover{
+    color: rgb(165, 165, 165);
+}
+#ubapilt{
+    max-width: 800px;
+    width: 100%;
+}
+.koletekst{
+    color: rgb(212, 0, 255);
+
+}
+a{
+    color: rgb(255, 32, 32);
+    text-decoration: none;
+}
+a:hover{
+    color: rgb(136, 87, 205);
+}

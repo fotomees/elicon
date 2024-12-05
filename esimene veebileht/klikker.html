@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uba klikker</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #klikkpilt{
+            max-width: 20em;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <a href="index.html">Avalehele</a>
+    </div>
+
+    <div id="sisu">
+        <h1>Uba klikker</h1>
+        <img onclick="feinitants()" id="klikkpilt" src="oadklikk.jpg" alt="picture has clickable beans">
+        <p id="punktid">0</p>
+    </div>
+
+    <script>
+        
+        let score = 0;
+        function feinitants(){
+            score = score + 1;
+            document.getElementById("punktid").innerText = score
+        }
+
+    </script>
+
+
+</body>
+</html>

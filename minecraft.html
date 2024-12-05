@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Mäng - Minecrafti stiilis</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- Loo platvorm (canvas) 3D graafikaga -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Loome kõik vajalikud objekti omadused ja seadistused
+
+        var scene, camera, renderer, cube;
+        var clock = new THREE.Clock();
+
+        // Algseadistused
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // Kaamera asukoht
+            camera.position.z = 5;
+
+            // Liikumisandurid ja plokkide loomine
+            var geometry = new THREE.BoxGeometry(1, 1, 1); // Üks plokk
+            var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+
+            // Lisame lihtsa valguse
+            var light = new THREE.AmbientLight(0x404040); // Soft white light
+            scene.add(light);
+
+            // Loome põrkumise maapinna
+            var groundGeometry = new THREE.PlaneGeometry(100, 100);
+            var groundMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa, side: THREE.DoubleSide });
+            var ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = Math.PI / 2;
+            scene.add(ground);
+
+            // Käivitame animaatori funktsiooni
+            animate();
+        }
+
+        // Animaator, et joonistada ja liikumisi uuesti joonistada
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Liikumine: plokki liigutamine või kaamera liikumine
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            // Kasutaja klaviatuurilt liikumisvõimekus (kaamera liikumine)
+            var delta = clock.getDelta(); // Aeg alates eelmise kaadrilt
+            var speed = 5 * delta; // Kiirus liikumiseks
+
+            // Liikumisvõimekused
+            if (keys['w']) camera.position.z -= speed;
+            if (keys['s']) camera.position.z += speed;
+            if (keys['a']) camera.position.x -= speed;
+            if (keys['d']) camera.position.x += speed;
+
+            // Kaamera pööramine
+            if (keys['ArrowLeft']) camera.rotation.y -= 0.05;
+            if (keys['ArrowRight']) camera.rotation.y += 0.05;
+
+            renderer.render(scene, camera);
+        }
+
+        // Klaviatuuri liikumise käsitlemine
+        var keys = {};
+        window.addEventListener('keydown', function(event) {
+            keys[event.key] = true;
+        });
+        window.addEventListener('keyup', function(event) {
+            keys[event.key] = false;
+        });
+
+        // Algab kõik
+        init();
+    </script>
+
+</body>
+</html>
